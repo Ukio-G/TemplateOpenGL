@@ -36,10 +36,7 @@ To compile and run this project, you will need:
 * [STB Image library](https://github.com/nothings/stb) (included)
 
 ### Setup
-Clone this repository:
-```bash
-git clone https://github.com/yourusername/OpenGL_Template.git
-```
+Clone this repository.
 
 Run dependency.sh (For Arch linux, Debian, CentOS and MacOS users) to install libs:
 ```bash
