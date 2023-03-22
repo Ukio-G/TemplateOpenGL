@@ -1,5 +1,13 @@
 #include <stdexcept>
-#include <GL/glew.h>
+
+#ifdef __APPLE__
+#  include <GL/glew.h>
+#  include <OpenGL/gl.h>
+#  include <OpenGL/glext.h>
+#else
+#  include <GL/glew.h>
+#endif
+
 #include "Window.hpp"
 
 void Window::initGLFW() {
@@ -48,7 +56,7 @@ void Window::initViewport() {
 	glViewport(0, 0, width, height);
 }
 
-Window::Window(int width, int height) : width(width), height(height) {
+Window::Window(int width, int height) : width(width), height(height), name("Window") {
 	init();
 }
 

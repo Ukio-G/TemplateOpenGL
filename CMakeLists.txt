@@ -3,8 +3,11 @@ project(opengl-glfw-glew-cmake)
 
 set(CMAKE_CXX_STANDARD 11)
 set(OpenGL_GL_PREFERENCE LEGACY)
-
 set(APP_TARGET opengl-sample)
+
+if (APPLE)
+    add_compile_definitions(GL_SILENCE_DEPRECATION)
+endif (APPLE)
 
 # opengl
 find_package(OpenGL REQUIRED)
@@ -19,9 +22,10 @@ link_libraries(${GLFW_LIBRARY_DIRS})
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIRS})
 
+
 include_directories(. include)
 
-add_executable(opengl-sample src/Shader.cpp main.cpp
+add_executable(${APP_TARGET} src/Shader.cpp main.cpp
         imgui/imgui_impl_glfw.cpp 
         imgui/imgui_impl_opengl3.cpp 
         imgui/imgui.cpp 
@@ -31,10 +35,23 @@ add_executable(opengl-sample src/Shader.cpp main.cpp
         menu/menu.cpp
         src/TextureParameters.hpp src/Texture.cpp src/Texture.hpp src/Window.cpp src/Window.hpp src/WindowSettings.hpp src/Object3D.cpp src/Object3D.hpp src/GeometryKeeper.cpp src/GeometryKeeper.h src/BuffersCollection.hpp)
 
+if (APPLE)
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(OpenGL_LIBRARY OpenGL)
+    find_library(IOKIT_LIBRARY IOKit)
+    find_library(COREVIDEO_LIBRARY CoreVideo)
+    SET(EXTRA_LIBS ${COCOA_LIBRARY} ${OpenGL_LIBRARY} ${IOKIT_LIBRARY} ${COREVIDEO_LIBRARY})
+endif (APPLE)
+
+if (APPLE)
+    target_link_libraries(${APP_TARGET} GLEW::GLEW)
+else()
+    target_link_libraries(${APP_TARGET} ${GLEW_LIBRARIES} dl)
+endif (APPLE)
+
 target_link_libraries(
         ${APP_TARGET}
         glfw
-        ${OPENGL_LIBRARY}
-        ${GLEW_LIBRARIES}
-        dl
+        ${OPENGL_LIBRARIES}
+        ${EXTRA_LIBS}
 )

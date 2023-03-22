@@ -1,4 +1,9 @@
-#include <GL/gl.h>
+#if defined(__APPLE__)
+	#include <OpenGL/gl.h>
+#else
+	#include <GL/gl.h>
+#endif
+
 #include <stdexcept>
 #include "Texture.hpp"
 #define STB_IMAGE_IMPLEMENTATION

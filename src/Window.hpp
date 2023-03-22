@@ -16,6 +16,8 @@
 
 #include "WindowSettings.hpp"
 
+#include <string>
+
 class Window {
 public:
 	Window(int width, int height);
@@ -28,7 +30,7 @@ public:
 
 	int width;
 	int height;
-	std::string name = "Window";
+	std::string name;
 	GLFWwindow* window;
 	WindowSettings settings;
 };

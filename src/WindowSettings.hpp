@@ -14,6 +14,7 @@ struct WindowSettings {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, contextVersionMajor);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, contextVersionMinor);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, profile);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 		glfwWindowHint(GLFW_RESIZABLE, resizable);
 	}
 };
