@@ -36,4 +36,5 @@ target_link_libraries(
         glfw
         ${OPENGL_LIBRARY}
         ${GLEW_LIBRARIES}
+        dl
 )
