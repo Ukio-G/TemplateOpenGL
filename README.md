@@ -67,8 +67,8 @@ Run
 
 ### ToDo
 1. [ ] JSON-based resource loader
-2. [*] Keys handler
-3. [*] Camera
+2. [x] Keys handler
+3. [x] Camera
 4. [ ] Mouse picking
 5. [ ] Phong lighting
 6. [ ] Normal mapping
