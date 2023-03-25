@@ -28,7 +28,7 @@ This is a simple OpenGL project template that uses GLFW, GLEW, ImGui, and glm li
 To compile and run this project, you will need:
 
 * CMake and make
-* C++11 compatible compiler
+* C++17 compatible compiler
 * GLFW3
 * GLEW
 * glm
