@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.11)
 project(opengl-glfw-glew-cmake)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(OpenGL_GL_PREFERENCE LEGACY)
 set(APP_TARGET opengl-sample)
 
@@ -33,7 +33,7 @@ add_executable(${APP_TARGET} src/Shader.cpp main.cpp
         imgui/imgui_widgets.cpp
         imgui/imgui_draw.cpp
         menu/menu.cpp
-        src/TextureParameters.hpp src/Texture.cpp src/Texture.hpp src/Window.cpp src/Window.hpp src/WindowSettings.hpp src/Object3D.cpp src/Object3D.hpp src/GeometryKeeper.cpp src/GeometryKeeper.h src/BuffersCollection.hpp)
+        src/TextureParameters.hpp src/Texture.cpp src/Texture.hpp src/Window.cpp src/Window.hpp src/WindowSettings.hpp src/Object3D.cpp src/Object3D.hpp src/GeometryKeeper.cpp src/GeometryKeeper.h src/BuffersCollection.hpp src/Camera.cpp src/Camera.hpp src/KeysControls.cpp src/KeysControls.hpp src/mouseHandler.cpp src/mouseHandler.hpp include/MouseEvents.hpp)
 
 if (APPLE)
     find_library(COCOA_LIBRARY Cocoa)

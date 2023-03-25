@@ -6,16 +6,18 @@
 
 #include "src/Shader.h"
 #include "primitives/triangle.h"
+#include "primitives/rectangle.h"
 
 #include <glm/glm.hpp>
 #include "menu/menu.hpp"
 
 #include "include/math.hpp"
 #include "src/GeometryKeeper.h"
+#include "src/Camera.hpp"
+#include "src/KeysControls.hpp"
+#include "src/mouseHandler.hpp"
 
-// The MAIN function, from here we start the application and run the game loop
 int main() {
-	// Create a GLFWwindow object that we can use for GLFW's functions
 	Window window(800, 800);
 
 	// Init shaders
@@ -27,13 +29,21 @@ int main() {
 
 	GeometryKeeper geometryKeeper;
 	geometryKeeper.newGeometry("triangle", (Vertex *) triangle_vertices, (int *) triangle_indexes, 3, 3);
+	geometryKeeper.newGeometry("rectangle", (Vertex *) plane_vertices, (int *) plane_indexes, 4, 6);
 
-	Object3D triangle = geometryKeeper.instanceObject3D("triangle");
-	triangle.texture = &texture;
+	KeysControls keysControls(window);
+	MouseControls mouseControls(window);
+
+	Camera c({0.0f, 0.0f, 0.0f}, {-90.0f, 0.0f, 0.0f});
+	c.initMovements();
+
+	Object3D rectangle = geometryKeeper.instanceObject3D("rectangle");
+	rectangle.setTranslate({0.0, 0.0, -5.0});
+	rectangle.texture = &texture;
 
 	glEnable(GL_DEPTH_TEST);
 
-	while (!glfwWindowShouldClose(window.window)) {
+	while (!glfwWindowShouldClose(window.glfwWindow)) {
 		glm::mat4 projectionMatrix = glm::mat4(1.0f);
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
 		glfwPollEvents();
@@ -45,22 +55,25 @@ int main() {
 
 		/* ImGui::ShowDemoWindow(&show_demo_window); */
 
-		drawMenu(triangle, projectionMatrix);
+		drawMenu(rectangle, projectionMatrix, c);
 		ImGui::Render();
+
+		keysControls.pollingKeysEvent();
+		mouseControls.pollingMouseEvents();
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		shaderProgram.setInt("texture1", 0);
 		shaderProgram.setMatrix4d("projection", projectionMatrix);
+		shaderProgram.setMatrix4d("view", c.viewMatrix);
 
-		triangle.updateModelMatrix();
-		triangle.draw(shaderProgram);
+		rectangle.updateModelMatrix();
+		rectangle.draw(shaderProgram);
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		// Swap the screen buffers
-		glfwSwapBuffers(window.window);
+		glfwSwapBuffers(window.glfwWindow);
 	}
 
 	// Terminate GLFW, clearing any resources allocated by GLFW.

@@ -31,7 +31,7 @@ public:
 	int width;
 	int height;
 	std::string name;
-	GLFWwindow* window;
+	GLFWwindow* glfwWindow;
 	WindowSettings settings;
 };
 

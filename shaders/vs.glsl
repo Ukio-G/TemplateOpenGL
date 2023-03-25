@@ -8,11 +8,12 @@ out vec2 TexCoord;
 
 uniform mat4 transform;
 uniform mat4 projection;
+uniform mat4 view;
 
 void main()
 {
-    vec4 pos = transform * vec4(aPos.x, aPos.y, aPos.z, 1.0);
-    pos = projection * pos;
+    vec4 pos = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    pos = projection * view * transform * pos;
     gl_Position = pos;
     vColor = aColor;
     TexCoord = aTexCoord;

@@ -1,10 +1,11 @@
 #include "menu.hpp"
 #include "src/Object3D.hpp"
 #include "math.hpp"
+#include "src/Camera.hpp"
 
 void translationWindow(Object3D & object3D) {
 	glm::vec3 translateVector = object3D.getTranslate();
-	ImGui::Begin("Translation window");
+	ImGui::Begin("Translation glfwWindow");
 		ImGui::DragFloat3("Translation", (float*)&translateVector, 0.01f);
     ImGui::End();
 	object3D.setTranslate(translateVector);
@@ -12,7 +13,7 @@ void translationWindow(Object3D & object3D) {
 
 void rotationWindow(Object3D & object3D) {
 	static glm::vec3 rotateAxis = object3D.getRotate();
-	ImGui::Begin("Rotation window");
+	ImGui::Begin("Rotation glfwWindow");
 		ImGui::DragFloat3("Rotation", (float*)&rotateAxis, 1.f);
     ImGui::End();
 	object3D.setRotate(rotateAxis);
@@ -28,13 +29,13 @@ void showMatrix(const glm::mat4 &mat, const char * matrixLabel) {
 }
 
 void vertexW_Window(float & vertex_w) {
-	ImGui::Begin("Vertex W component window");
+	ImGui::Begin("Vertex W component glfwWindow");
 		ImGui::DragFloat("W: ", &vertex_w, 0.1f);
 	ImGui::End();
 }
 
 void projectionUsage(glm::mat4 & projectionMatrix) {
-	static bool useProjectionGLM = false;
+	static bool useProjectionGLM = true;
 	static bool useProjectionMyOwn = false;
 	static bool always_fixed_w = false;
 
@@ -107,11 +108,25 @@ void vertexMatrixCalculation(Object3D & object3D, glm::mat4 &proj_matrix, const 
 	ImGui::End();
 }
 
+void printCamera(Camera & c) {
+	auto mat = c.viewMatrix;
+	auto pos = c.position;
+	ImGui::Begin("Camera");
+	ImGui::Text("%f %f %f %f", mat[0][0], mat[1][0], mat[2][0], mat[3][0]);
+	ImGui::Text("%f %f %f %f", mat[0][1], mat[1][1], mat[2][1], mat[3][1]);
+	ImGui::Text("%f %f %f %f", mat[0][2], mat[1][2], mat[2][2], mat[3][2]);
+	ImGui::Text("%f %f %f %f", mat[0][3], mat[1][3], mat[2][3], mat[3][3]);
 
-void drawMenu(Object3D & object, glm::mat4 & projectionMatrix) {
+	ImGui::Text("\nCamera pos [0]\t[1]\t[2]");
+	ImGui::Text("%f\t%f\t%f", pos[0], pos[1], pos[2]);
+	ImGui::End();
+}
+
+void drawMenu(Object3D & object, glm::mat4 & projectionMatrix, Camera &c) {
 	translationWindow(object);
 	rotationWindow(object);
 	vertexMatrixCalculation(object, projectionMatrix, 1.0);
 	projectionUsage(projectionMatrix);
 	showMatrix(projectionMatrix, "projectionMatrix");
+	printCamera(c);
 }

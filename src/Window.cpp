@@ -17,14 +17,14 @@ void Window::initGLFW() {
 	settings.apply();
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	window = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
+	glfwWindow = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
 
-	if (window == nullptr)
-		throw std::runtime_error("Failed to create GLFW window");
+	if (glfwWindow == nullptr)
+		throw std::runtime_error("Failed to create GLFW glfwWindow");
 
-	glfwMakeContextCurrent(window);
-	// Set the required callback functions TODO: Make callback handler list
-	// glfwSetKeyCallback(window, key_callback);
+	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	glfwMakeContextCurrent(glfwWindow);
 }
 
 void Window::initIMGUI() {
@@ -39,7 +39,7 @@ void Window::initIMGUI() {
 	ImGui::StyleColorsDark();
 
 	// Setup Platform/Renderer backends
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 }
