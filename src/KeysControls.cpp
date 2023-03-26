@@ -13,6 +13,6 @@ void KeysControls::pollingKeysEvent() {
 	for (auto &item: actions) {
 		auto key = item.first;
 		if (glfwGetKey(window->glfwWindow, key) == GLFW_PRESS)
-			item.second();
+			item.second(window);
 	}
 }

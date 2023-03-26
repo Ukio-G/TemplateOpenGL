@@ -18,5 +18,6 @@ public:
 	glm::vec3 right;
 
 	glm::mat4 viewMatrix;
+	bool movementActive;
 };
 #endif

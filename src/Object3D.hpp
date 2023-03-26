@@ -41,8 +41,8 @@ public:
 	void setTranslate(const glm::vec3 &translate) {
 		auto id = glm::mat4(1);
 
-		translateMatrix = glm::translate(id, translateVector);
 		translateVector = translate;
+		translateMatrix = glm::translate(id, translateVector);
 	}
 	const glm::vec3 &getRotate() const {
 		return rotateVector;

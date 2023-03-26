@@ -44,7 +44,7 @@ void Texture::init() {
 }
 
 void Texture::bind() {
-	glActiveTexture(GL_TEXTURE0 + id - 1);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, id);
 }
 

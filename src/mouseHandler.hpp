@@ -23,7 +23,7 @@ public:
 		int windowsSize[2];
 		glfwGetWindowSize(window.glfwWindow, windowsSize, windowsSize + 1);
 
-		glfwSetCursorPos(this->window->glfwWindow, (double)(windowsSize[0]/2),(double)(windowsSize[0]/2));
+		glfwSetCursorPos(this->window->glfwWindow, (double)(windowsSize[0]/2),(double)(windowsSize[1]/2));
 		eventSubscriber = Subscriber::create("MouseControlsSubscriber");
 		EventChannel::getInstance().subscribe("NewMouseEvent", eventSubscriber);
 		eventSubscriber->addActionToTopic("NewMouseEvent", "NewMouseEvent",[&](Subscriber::ActionArgument argument) {

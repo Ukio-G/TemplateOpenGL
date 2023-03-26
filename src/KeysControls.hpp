@@ -9,7 +9,7 @@
 
 class KeysControls {
 public:
-	using ActionType = std::function<void()>;
+	using ActionType = std::function<void(Window * window)>;
 	using KeyType = int;
 	std::map<KeyType, ActionType> actions;
 	Window * window;

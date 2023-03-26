@@ -109,8 +109,9 @@ void vertexMatrixCalculation(Object3D & object3D, glm::mat4 &proj_matrix, const 
 }
 
 void printCamera(Camera & c) {
-	auto mat = c.viewMatrix;
-	auto pos = c.position;
+	const auto & mat = c.viewMatrix;
+	const auto & pos = c.position;
+	const auto & rot = c.rotation;
 	ImGui::Begin("Camera");
 	ImGui::Text("%f %f %f %f", mat[0][0], mat[1][0], mat[2][0], mat[3][0]);
 	ImGui::Text("%f %f %f %f", mat[0][1], mat[1][1], mat[2][1], mat[3][1]);
@@ -119,6 +120,9 @@ void printCamera(Camera & c) {
 
 	ImGui::Text("\nCamera pos [0]\t[1]\t[2]");
 	ImGui::Text("%f\t%f\t%f", pos[0], pos[1], pos[2]);
+
+	ImGui::Text("\nCamera rotation [0]\t[1]\t[2]");
+	ImGui::Text("%f\t%f\t%f", rot[0], rot[1], rot[2]);
 	ImGui::End();
 }
 

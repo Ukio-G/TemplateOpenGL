@@ -25,21 +25,30 @@ int main() {
 	Shader fs("shaders/fs.glsl", GL_FRAGMENT_SHADER);
 	ShaderProgram shaderProgram(&vs, &fs);
 
+	auto house_texture = Texture("../textures/Cottage_Clean_Base_Color.png");
 	auto texture = Texture("../texture.jpeg");
 
 	GeometryKeeper geometryKeeper;
 	geometryKeeper.newGeometry("triangle", (Vertex *) triangle_vertices, (int *) triangle_indexes, 3, 3);
 	geometryKeeper.newGeometry("rectangle", (Vertex *) plane_vertices, (int *) plane_indexes, 4, 6);
+	geometryKeeper.newGeometry("house", "../models/Cottage_FREE.obj");
 
 	KeysControls keysControls(window);
 	MouseControls mouseControls(window);
 
-	Camera c({0.0f, 0.0f, 0.0f}, {-90.0f, 0.0f, 0.0f});
+	Camera c({0.0f, 0.0f, 0.0f}, {-270.0f, 0.0f, 0.0f});
 	c.initMovements();
 
+	Object3D house = geometryKeeper.instanceObject3D("house");
 	Object3D rectangle = geometryKeeper.instanceObject3D("rectangle");
-	rectangle.setTranslate({0.0, 0.0, -5.0});
+
+	rectangle.setTranslate({0.0, 0.0, 5.0});
+	house.setTranslate({0.0, 0.0, 30.0});
+	house.updateModelMatrix();
+	rectangle.updateModelMatrix();
+
 	rectangle.texture = &texture;
+	house.texture = &house_texture;
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -66,9 +75,8 @@ int main() {
 
 		shaderProgram.setMatrix4d("projection", projectionMatrix);
 		shaderProgram.setMatrix4d("view", c.viewMatrix);
-
-		rectangle.updateModelMatrix();
 		rectangle.draw(shaderProgram);
+		house.draw(shaderProgram);
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
